@@ -1,0 +1,4 @@
+name = Flushot Clinic
+description = Autopopulate flu shot registration form fields from CruzID Blue
+package = Flu Shot Clinic
+core = 7.x

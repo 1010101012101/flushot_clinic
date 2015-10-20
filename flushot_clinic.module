@@ -1,0 +1,29 @@
+<?php
+
+
+/**
+  * Implements flushot_clinic_form_alter()
+  * In conjunction with soe_blue_auth, we simply populate
+  * the reg form with data from LDAP for easier handling.
+  */
+
+function flushot_clinic_form_alter(&$form, &$form_state, $form_id) {  
+  // echo 'test message';
+  global $user;
+  $account = $user;
+  $uid = $account->uid;
+
+  // Load the account and LDAP info we have on this user
+  $this_user = user_load($uid);
+   
+  if ($form_id == 'registration_form') { 
+    $form['field_first_name']['und'][0]['value']['#default_value'] = $this_user->blue['ucscpersongivenname'][0];
+    $form['field_last_name']['und'][0]['value']['#default_value'] = $this_user->blue['ucscpersonsn'][0];
+    $form['field_unit']['und'][0]['value']['#default_value'] = $this_user->blue['ucscpersonpubdivision'][0];
+    $form['field_phone_number']['und'][0]['value']['#default_value'] = $this_user->blue['ucscpersontelephonenumber'][0];
+    $form['field_email_address']['und'][0]['email']['#default_value'] = $user->mail;
+  }
+  return $form;
+}
+
+ ?>
